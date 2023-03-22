@@ -35,6 +35,7 @@ Features
 
 - Change Color Scheme
 - Change Typography
+- Prompt Completion Logging for RLHF and Finetuning
 
 TODO
 ----
