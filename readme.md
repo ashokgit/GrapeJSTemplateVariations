@@ -30,6 +30,22 @@ This script uses a base HTML template file located in the `./data` directory. Yo
 
 The script also uses OpenAI's GPT-3 API to fetch color and typography suggestions. You will need to provide your own API key in the `.env` file.
 
+Features
+--------
+
+- Change Color Scheme
+- Change Typography
+
+TODO
+----
+
+- Change Layout Structure
+- Change Design
+- Implement a Tailwind CSS based template
+- Build a HTML Interrogator to navigate into the template to better control the prompt and suggestions
+- Prompt Chaining, Langchain Implementation (* if necessary)
+- and much more, stay tuned
+
 License
 -------
 
