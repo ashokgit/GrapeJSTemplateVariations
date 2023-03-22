@@ -1,4 +1,5 @@
 import openai
+from lib.prompt_completion_logger import PromptCompletionLogger
 
 class OpenAIColorFetcher:
     def __init__(self, api_key):
@@ -43,5 +44,11 @@ class OpenAIColorFetcher:
             n=1,
             temperature=0.7,
         )
+        
+        completion = response.choices[0].message['content'].strip()
 
-        return response.choices[0].message['content'].strip()
+        # let's log this for future finetuning task
+        logger = PromptCompletionLogger()
+        logger.log(message, completion)
+
+        return completion

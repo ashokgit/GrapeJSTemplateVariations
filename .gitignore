@@ -16,6 +16,8 @@ eggs/
 .eggs/
 lib64/
 parts/
+data/outputs/
+logs/
 sdist/
 var/
 wheels/

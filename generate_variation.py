@@ -7,7 +7,6 @@ import re
 import json
 import argparse
 
-
 # Function to parse colors from the response
 def parse_colors_from_response(color_response):
    # Replace single quotes with double quotes to make the string JSON-compatible
@@ -22,7 +21,12 @@ def parse_colors_from_response(color_response):
 
 def main(style_for):
     input_file = './data/basetemplate.html'
-    output_file = f'./data/{style_for.replace(" ", "_")}.html'
+    output_directory = './data/outputs/'
+
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
+    output_file = f'{output_directory}{style_for.replace(" ", "_")}.html'
 
     load_dotenv()
     api_key = os.getenv("OPENAI_API_KEY")
