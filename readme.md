@@ -15,8 +15,6 @@ Usage
 
 To use the script, run the following command:
 
-pythonCopy code
-
 `python generate_variation.py --style_for "my restaurant style"`
 
 This will generate a new HTML file with the specified style applied. The output file will be saved to the `./data` directory with a filename based on the provided `--style_for` argument.
