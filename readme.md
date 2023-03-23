@@ -15,8 +15,6 @@ Usage
 
 To use the script, run the following command:
 
-pythonCopy code
-
 `python generate_variation.py --style_for "my restaurant style"`
 
 This will generate a new HTML file with the specified style applied. The output file will be saved to the `./data` directory with a filename based on the provided `--style_for` argument.
@@ -28,7 +26,7 @@ Data
 
 This script uses a base HTML template file located in the `./data` directory. You can modify this file to change the structure and content of the output HTML files.
 
-The script also uses OpenAI's GPT-3 API to fetch color and typography suggestions. You will need to provide your own API key in the `.env` file.
+The script also uses OpenAI's GPT-4 API to fetch color and typography suggestions. You will need to provide your own API key in the `.env` file.
 
 Features
 --------
