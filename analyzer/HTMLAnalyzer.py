@@ -10,6 +10,25 @@ class HTMLAnalyzer:
         self.layout_schemes = set()
         self.design_preferences = set()
 
+    def get_critical_design_prefs(self):
+        grouped_rules = defaultdict(lambda: defaultdict(list))
+
+        for rule in self.css_rules:
+            selector = rule['selector']
+            for property, value in rule['rules'].items():
+                grouped_rules[property][selector].append(value)
+
+        critical_prefs = {}
+        for property, selectors in grouped_rules.items():
+            critical_prefs[property] = []
+            for selector, values in selectors.items():
+                critical_prefs[property].append({
+                    'element': selector,
+                    'values': values
+                })
+
+        return critical_prefs
+
     def process_json(self, json_obj):
         if json_obj.get('tag') is not None:
             attrs = json_obj.get('attrs', {})
@@ -39,12 +58,36 @@ class HTMLAnalyzer:
             # Add similar code blocks for processing color, layout, and design preferences
             # based on your specific requirements and the properties you want to extract
 
+    def apply_changes(self, changes):
+        for change in changes:
+            selector = change['selector']
+            property = change['property']
+            new_value = change['new_value']
+
+            # Find the CSS rule to update
+            rule_to_update = None
+            for rule in self.css_rules:
+                if rule['selector'] == selector:
+                    rule_to_update = rule
+                    break
+
+            # Update the CSS rule
+            if rule_to_update:
+                rule_to_update['rules'][property] = new_value
+            else:
+                # If the rule is not found, add a new rule
+                self.css_rules.append({
+                    'selector': selector,
+                    'rules': {property: new_value}
+                })
+
     def analyze(self):
         self.process_json(self.json_data)
         self.process_css_rules()
+        # return self.get_critical_design_prefs()
         return {
-            'typography': list(self.typography),
-            'color_schemes': dict(self.color_schemes),
-            'layout_schemes': list(self.layout_schemes),
-            'design_preferences': list(self.design_preferences)
+            # 'typography': list(self.typography),
+            # 'color_schemes': dict(self.color_schemes),
+            # 'layout_schemes': list(self.layout_schemes),
+            'design_preferences': self.get_critical_design_prefs()
         }

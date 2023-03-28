@@ -86,16 +86,79 @@ decoder = HTMLDecoder()
 json_output = encoder.encode(html_content)
 html_output = decoder.decode(json_output)
 
-print("JSON Output:")
-print(json_output)
+# print("JSON Output:")
+# print(json_output)
 
-print("HTML Output:")
-print(html_output)
+# print("HTML Output:")
+# print(html_output)
 
 analyzer = HTMLAnalyzer(json_output)
 analysis_result = analyzer.analyze()
 
+suggested_changes = [
+    {
+        'selector': 'body',
+        'property': 'background-color',
+        'new_value': '#FFCE64'
+    },
+    {
+        'selector': 'body',
+        'property': 'color',
+        'new_value': '#000'
+    },
+    {
+        'selector': '.background-primary',
+        'property': 'background-color',
+        'new_value': '#FFCE64'
+    },
+    {
+        'selector': '.background-secondary',
+        'property': 'background-color',
+        'new_value': '#FFCE64'
+    },
+    {
+        'selector': '.background-tertiary',
+        'property': 'background-color',
+        'new_value': '#FFCE64'
+    },
+    {
+        'selector': '.color-primary',
+        'property': 'color',
+        'new_value': '#000'
+    },
+    {
+        'selector': '.color-secondary',
+        'property': 'color',
+        'new_value': '#000'
+    },
+    {
+        'selector': '.color-tertiary',
+        'property': 'color',
+        'new_value': '#000'
+    },
+    {
+        'selector': '.color-background',
+        'property': 'color',
+        'new_value': '#FFCE64'
+    },
+    {
+        'selector': '.color-menu',
+        'property': 'color',
+        'new_value': '#000'
+    },
+    {
+        'selector': '#iubvf',
+        'property': 'margin-left',
+        'new_value': '0'
+    }
+]
+
 print("Analysis Result:")
+print(analysis_result)
+
+# Apply changes
+analyzer.apply_changes(suggested_changes)
+
 print(analysis_result)
 
 with open('./data/json_output.txt', 'w') as file:
