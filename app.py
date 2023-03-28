@@ -188,6 +188,10 @@ analyzer.apply_changes(suggested_changes)
 print('---- AFTER -----------')
 print(analyzer.css_rules)
 
+
+# Replace the new css rules in the html template again
+# replace the original template
+
 with open('./data/json_output.txt', 'w') as file:
         output = re.sub(' +', ' ', json.dumps(json_output['html_structure']))
         file.write(output)
