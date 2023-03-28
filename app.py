@@ -93,7 +93,35 @@ html_output = decoder.decode(json_output)
 # print(html_output)
 
 analyzer = HTMLAnalyzer(json_output)
+print('---- BEFORE -----------')
+print(analyzer.css_rules)
+
 analysis_result = analyzer.analyze()
+
+# We will use the above analysis_result to pass it to gpt in the below prompt
+# // System: You are a UI/UX Expert. You have a deep understanding of advanced color theory, fonts and spacing.
+# Original Design Preference:
+# {analysis_result}
+# Pick all important elements and make a variation scheme for a 'Traditional Chinese Resturant' in the given format below
+# suggested_changes = [
+#     {
+#         'selector': '',
+#         'property': ',
+#         'new_value': ''
+#     },
+#    {
+#         'selector': '',
+#         'property': ',
+#         'new_value': ''
+#     },
+# ]
+# Suggested Design Preference: 
+# suggested_changes = [
+#     {
+
+# Stop word: ]
+
+# CALL GPT-3.5 completion api here
 
 suggested_changes = [
     {
@@ -153,13 +181,12 @@ suggested_changes = [
     }
 ]
 
-print("Analysis Result:")
-print(analysis_result)
+# print("Analysis Result:")
+# print(analysis_result)
 
-# Apply changes
 analyzer.apply_changes(suggested_changes)
-
-print(analysis_result)
+print('---- AFTER -----------')
+print(analyzer.css_rules)
 
 with open('./data/json_output.txt', 'w') as file:
         output = re.sub(' +', ' ', json.dumps(json_output['html_structure']))
