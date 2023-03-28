@@ -31,8 +31,9 @@ class OpenAIColorFetcher:
             f"and a font style from the following options: {font_styles}. "
             f"Generate background, text, primary, secondary, and accent color schemes. "
             f"Also provide an explanation for the color and font choice"
-            f"Response strictly in the following format: {{ 'font': '', 'font_style': '', 'background': '#', 'text': '#', 'primary': '#', 'secondary': '#', 'accent': '#', 'reason':'' }}"
         )
+
+        message = message +  'Response strictly in the following format: {"font": "", "font_style": "", "background": "#", "text": "#", "primary": "#", "secondary": "#", "accent": "#", "reason":""}'
 
         response = openai.ChatCompletion.create(
             model="gpt-4",
