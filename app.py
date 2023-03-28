@@ -84,7 +84,7 @@ encoder = HTMLEncoder()
 decoder = HTMLDecoder()
 
 json_output = encoder.encode(html_content)
-html_output = decoder.decode(json_output)
+
 
 # print("JSON Output:")
 # print(json_output)
@@ -188,9 +188,13 @@ analyzer.apply_changes(suggested_changes)
 print('---- AFTER -----------')
 print(analyzer.css_rules)
 
-
 # Replace the new css rules in the html template again
 # replace the original template
+
+updated_html_structure = analyzer.apply_css_rules(analyzer.css_rules)
+html_output = decoder.decode(updated_html_structure)
+print('------ NEW HTML --------')
+print(html_output)
 
 with open('./data/json_output.txt', 'w') as file:
         output = re.sub(' +', ' ', json.dumps(json_output['html_structure']))

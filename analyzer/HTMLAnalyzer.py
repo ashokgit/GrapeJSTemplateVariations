@@ -91,3 +91,51 @@ class HTMLAnalyzer:
             # 'layout_schemes': list(self.layout_schemes),
             'design_preferences': self.get_critical_design_prefs()
         }
+
+    def apply_css_rules(self, new_css_rules):
+        # Update the css_rules attribute with the new rules
+        self.css_rules = new_css_rules
+
+        # Create a dictionary to store all the styles
+        styles = {}
+
+        # Iterate through the css_rules and create a dictionary of styles
+        for rule in self.css_rules:
+            selector = rule['selector']
+            for property, value in rule['rules'].items():
+                if selector not in styles:
+                    styles[selector] = {}
+                styles[selector][property] = value
+
+        # Apply the styles to the html_structure
+        self.apply_styles_to_json(self.json_data, styles)
+
+        return self.json_data
+
+    def apply_styles_to_json(self, json_obj, styles):
+        if json_obj.get('tag') is not None:
+            tag = json_obj.get('tag')
+            attrs = json_obj.get('attrs', {})
+
+            # Apply styles based on the tag name
+            if tag in styles:
+                if 'attrs' not in json_obj:
+                    json_obj['attrs'] = {}
+                if 'style' not in json_obj['attrs']:
+                    json_obj['attrs']['style'] = {}
+                for property, value in styles[tag].items():
+                    json_obj['attrs']['style'][property] = value
+
+            # Apply styles based on the classes
+            if 'class' in attrs:
+                class_list = attrs['class']
+                for class_name in class_list:
+                    selector = f".{class_name}"
+                    if selector in styles:
+                        if 'style' not in json_obj['attrs']:
+                            json_obj['attrs']['style'] = {}
+                        for property, value in styles[selector].items():
+                            json_obj['attrs']['style'][property] = value
+
+            for child in json_obj.get('children', []):
+                self.apply_styles_to_json(child, styles)
